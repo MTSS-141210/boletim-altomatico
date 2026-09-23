@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Boletim</title>
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📓</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📓</text></svg>">
     <style>
         :root {
             --bg: #f6f4ef;
@@ -53,14 +53,8 @@
             --input-bg: #22271c;
         }
 
-        * {
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-padding-top: env(safe-area-inset-top, 0px);
-        }
-
+        * { box-sizing: border-box; }
+        html { scroll-padding-top: env(safe-area-inset-top, 0px); }
         body {
             margin: 0;
             background: var(--bg);
@@ -68,24 +62,19 @@
             font-family: "Iowan Old Style", "Georgia", serif;
             min-height: 100%;
         }
-
-        [hidden] {
-            display: none !important;
-        }
+        [hidden] { display: none !important; }
 
         header {
             padding: 28px 20px 18px;
             max-width: 920px;
             margin: 0 auto;
         }
-
         h1 {
             font-size: 22px;
             font-weight: 600;
             margin: 0 0 2px;
             letter-spacing: .2px;
         }
-
         .sub {
             color: var(--muted);
             font-size: 14px;
@@ -105,13 +94,11 @@
             border-radius: 10px;
             padding: 22px;
         }
-
         .setup-form {
             display: flex;
             gap: 8px;
             margin-bottom: 16px;
         }
-
         .setup-form input[type="text"] {
             flex: 1;
             padding: 11px 12px;
@@ -122,12 +109,10 @@
             color: var(--ink);
             font-family: inherit;
         }
-
         .setup-form input[type="text"]:focus {
             outline: 2px solid var(--accent);
             outline-offset: 1px;
         }
-
         .btn {
             font-family: -apple-system, system-ui, sans-serif;
             font-weight: 600;
@@ -139,24 +124,20 @@
             color: var(--panel);
             cursor: pointer;
         }
-
         .btn:disabled {
             opacity: .45;
             cursor: not-allowed;
         }
-
         .btn.secondary {
             background: transparent;
             color: var(--accent);
         }
-
         .btn.ghost {
             background: transparent;
             color: var(--muted);
             border-color: var(--line);
             font-weight: 500;
         }
-
         .chips {
             display: flex;
             flex-wrap: wrap;
@@ -164,7 +145,6 @@
             min-height: 34px;
             margin-bottom: 20px;
         }
-
         .chip {
             display: inline-flex;
             align-items: center;
@@ -176,7 +156,6 @@
             font-size: 14px;
             font-family: -apple-system, system-ui, sans-serif;
         }
-
         .chip button {
             border: none;
             background: none;
@@ -187,17 +166,12 @@
             padding: 2px 6px;
             border-radius: 50%;
         }
-
-        .chip button:hover {
-            color: var(--bad);
-        }
-
+        .chip button:hover { color: var(--bad); }
         .empty-hint {
             color: var(--muted);
             font-size: 13.5px;
             font-family: -apple-system, system-ui, sans-serif;
         }
-
         .setup-actions {
             display: flex;
             justify-content: flex-end;
@@ -209,28 +183,19 @@
             justify-content: flex-end;
             margin-bottom: 12px;
         }
-
         .wrap {
             background: var(--panel);
             border: 1px solid var(--line);
             border-radius: 10px;
             overflow-x: auto;
         }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 640px;
-        }
-
-        th,
-        td {
+        table { width: 100%; border-collapse: collapse; min-width: 640px; }
+        th, td {
             padding: 10px 12px;
             text-align: left;
             font-size: 14px;
             border-bottom: 1px solid var(--line);
         }
-
         th {
             font-family: -apple-system, system-ui, sans-serif;
             font-weight: 600;
@@ -238,15 +203,8 @@
             color: var(--muted);
             white-space: nowrap;
         }
-
-        tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        td.materia {
-            font-weight: 600;
-        }
-
+        tbody tr:last-child td { border-bottom: none; }
+        td.materia { font-weight: 600; }
         input.nota {
             width: 56px;
             padding: 6px 4px;
@@ -258,18 +216,14 @@
             color: var(--ink);
             font-family: inherit;
         }
-
         input.nota:focus {
             outline: 2px solid var(--accent);
             outline-offset: 1px;
         }
-
-        td.soma,
-        td.media {
+        td.soma, td.media {
             font-family: -apple-system, system-ui, sans-serif;
             font-variant-numeric: tabular-nums;
         }
-
         .tag {
             font-family: -apple-system, system-ui, sans-serif;
             font-size: 12px;
@@ -278,40 +232,26 @@
             border-radius: 20px;
             display: inline-block;
         }
-
-        .tag.ok {
-            color: var(--ok);
-            background: var(--ok-bg);
-        }
-
-        .tag.bad {
-            color: var(--bad);
-            background: var(--bad-bg);
-        }
+        .tag.ok { color: var(--ok); background: var(--ok-bg); }
+        .tag.bad { color: var(--bad); background: var(--bad-bg); }
 
         footer {
             max-width: 920px;
             margin: 24px auto 60px;
             padding: 0 20px;
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
             font-family: -apple-system, system-ui, sans-serif;
         }
-
-        @media (max-width:480px) {
-            footer {
-                grid-template-columns: 1fr;
-            }
-        }
-
+        @media (max-width:700px) { footer { grid-template-columns: 1fr 1fr; } }
+        @media (max-width:480px) { footer { grid-template-columns: 1fr; } }
         .stat {
             background: var(--panel);
             border: 1px solid var(--line);
             border-radius: 10px;
             padding: 14px 16px;
         }
-
         .stat h2 {
             margin: 0 0 10px;
             font-size: 12px;
@@ -319,57 +259,17 @@
             color: var(--muted);
             font-family: -apple-system, system-ui, sans-serif;
         }
-
-        .stat ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
-        }
-
-        .stat li {
-            font-size: 14px;
-            font-family: "Iowan Old Style", Georgia, serif;
-        }
-
-        .stat.empty {
-            color: var(--muted);
-            font-size: 13px;
-        }
-
-        .avg {
-            grid-column: 1 / -1;
-            display: flex;
-            align-items: baseline;
-            gap: 10px;
-        }
-
-        .avg b {
-            font-size: 26px;
-            font-family: "Iowan Old Style", Georgia, serif;
-        }
-
-        .avg span {
-            font-size: 12px;
-            color: var(--muted);
-        }
+        .stat ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+        .stat li { font-size: 14px; font-family: "Iowan Old Style", Georgia, serif; }
+        .stat.empty { color: var(--muted); font-size: 13px; }
+        .avg { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 10px; }
+        .avg b { font-size: 26px; font-family: "Iowan Old Style", Georgia, serif; }
+        .avg span { font-size: 12px; color: var(--muted); }
 
         @media (max-width:480px) {
-            h1 {
-                font-size: 19px;
-            }
-
-            th,
-            td {
-                padding: 8px 8px;
-                font-size: 13px;
-            }
-
-            .setup-form {
-                flex-direction: column;
-            }
+            h1 { font-size: 19px; }
+            th, td { padding: 8px 8px; font-size: 13px; }
+            .setup-form { flex-direction: column; }
         }
     </style>
 </head>
@@ -422,12 +322,16 @@
     <footer id="statsFooter" hidden>
         <div class="stat avg"><b id="statAvg">0,00</b><span>Média geral</span></div>
         <div class="stat">
-            <h2>Aprovadas</h2>
+            <h2 id="labelOk">Aprovadas</h2>
             <ul id="listOk"></ul>
         </div>
         <div class="stat">
-            <h2 id="labelBad">Incompletas</h2>
-            <ul id="listBad"></ul>
+            <h2 id="labelIncomplete">Incompletas</h2>
+            <ul id="listIncomplete"></ul>
+        </div>
+        <div class="stat">
+            <h2 id="labelFail">Reprovadas</h2>
+            <ul id="listFail"></ul>
         </div>
     </footer>
 
@@ -544,17 +448,24 @@
         function renderTable() {
             const tbody = document.getElementById('tbody');
             tbody.innerHTML = '';
-            const aprovadas = [], reprovadas = [];
+            const aprovadas = [], reprovadas = [], incompletas = [];
             let avgSum = 0, avgCount = 0;
 
             subjects.forEach(nome => {
                 if (!grades[nome]) grades[nome] = [null, null, null, null];
                 const b = grades[nome];
                 const notas = b.filter(v => v !== null && v !== '' && !isNaN(v)).map(Number);
+                const completo = notas.length === 4;
                 const soma = notas.reduce((a, x) => a + x, 0);
                 const media = notas.length ? soma / 4 : 0;
-                const aprovado = media >= 6.0 && notas.length >= 3;
-                if (notas.length >= 3) { (aprovado ? aprovadas : reprovadas).push(nome); avgSum += media; avgCount++; }
+                const aprovado = completo && media >= 6.0;
+
+                if (completo) {
+                    avgSum += media; avgCount++;
+                    (aprovado ? aprovadas : reprovadas).push(nome);
+                } else {
+                    incompletas.push(nome);
+                }
 
                 let cells = '<td class="materia">' + nome + '</td>';
                 for (let c = 0; c < 4; c++) {
@@ -563,17 +474,19 @@
                 }
                 cells += '<td class="soma">' + (notas.length ? fmt(soma) : '—') + '</td>';
                 cells += '<td class="media">' + (notas.length ? fmt(media) : '—') + '</td>';
-                cells += '<td>' + (notas.length >= 3 ? '<span class="tag ' + (aprovado ? 'ok' : 'bad') + '">' + (aprovado ? 'Aprovado' : 'Reprovado') + '</span>' : '<span class="tag bad">Incompleto</span>') + '</td>';
+                cells += '<td>' + (completo ? '<span class="tag ' + (aprovado ? 'ok' : 'bad') + '">' + (aprovado ? 'Aprovado' : 'Reprovado') + '</span>' : '<span class="tag bad">Incompleto</span>') + '</td>';
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = cells;
                 tbody.appendChild(tr);
             });
 
-            document.querySelector('#listOk').previousElementSibling.textContent = 'Aprovadas (' + aprovadas.length + ')';
-            document.querySelector('#listBad').previousElementSibling.textContent = 'Incompletas (' + reprovadas.length + ')';
+            document.getElementById('labelOk').textContent = 'Aprovadas (' + aprovadas.length + ')';
+            document.getElementById('labelIncomplete').textContent = 'Incompletas (' + incompletas.length + ')';
+            document.getElementById('labelFail').textContent = 'Reprovadas (' + reprovadas.length + ')';
             document.getElementById('listOk').innerHTML = aprovadas.length ? aprovadas.map(n => '<li>' + n + '</li>').join('') : '<li class="empty">Nenhuma ainda</li>';
-            document.getElementById('listBad').innerHTML = reprovadas.length ? reprovadas.map(n => '<li>' + n + '</li>').join('') : '<li class="empty">Nenhuma ainda</li>';
+            document.getElementById('listIncomplete').innerHTML = incompletas.length ? incompletas.map(n => '<li>' + n + '</li>').join('') : '<li class="empty">Nenhuma</li>';
+            document.getElementById('listFail').innerHTML = reprovadas.length ? reprovadas.map(n => '<li>' + n + '</li>').join('') : '<li class="empty">Nenhuma ainda</li>';
             document.getElementById('statAvg').textContent = avgCount ? fmt(avgSum / avgCount) : '0,00';
 
             tbody.querySelectorAll('input.nota').forEach(inp => {
