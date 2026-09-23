@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -208,6 +207,8 @@
         .toolbar {
             display: flex;
             justify-content: flex-end;
+            gap: 8px;
+            flex-wrap: wrap;
             margin-bottom: 12px;
         }
 
@@ -380,7 +381,6 @@
         }
     </style>
 </head>
-
 <body>
     <header>
         <h1 id="pageTitle">Boletim</h1>
@@ -404,6 +404,9 @@
 
         <section id="boletimScreen" hidden>
             <div class="toolbar">
+                <button type="button" class="btn ghost" id="exportBtn">Baixar backup</button>
+                <label class="btn ghost" for="importInput" style="cursor:pointer;">Restaurar backup</label>
+                <input type="file" id="importInput" accept="application/json" hidden>
                 <button type="button" class="btn secondary" id="editSubjectsBtn">Editar matérias</button>
             </div>
             <div class="wrap">
@@ -441,7 +444,6 @@
             <ul id="listFail"></ul>
         </div>
     </footer>
-
     <script>
         const SUBJECTS_KEY = 'boletim-subjects-v1';
         const GRADES_KEY = 'boletim-grades-v1';
@@ -543,6 +545,43 @@
 
         document.getElementById('editSubjectsBtn').addEventListener('click', () => showSetup(true));
 
+        document.getElementById('exportBtn').addEventListener('click', () => {
+            const backup = { subjects, grades };
+            const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'boletim-backup.json';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+        });
+
+        document.getElementById('importInput').addEventListener('change', e => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = () => {
+                try {
+                    const backup = JSON.parse(reader.result);
+                    if (!Array.isArray(backup.subjects) || typeof backup.grades !== 'object') {
+                        alert('Arquivo de backup inválido.');
+                        return;
+                    }
+                    subjects = backup.subjects;
+                    grades = backup.grades;
+                    saveSubjects(subjects);
+                    saveGrades(grades);
+                    if (subjects.length) showBoletim(); else showSetup(false);
+                } catch (err) {
+                    alert('Não foi possível ler esse arquivo.');
+                }
+            };
+            reader.readAsText(file);
+            e.target.value = '';
+        });
+
         function showBoletim() {
             pageTitle.textContent = 'Boletim';
             pageSub.textContent = 'Toque numa nota para editar. Soma, média e situação recalculam sozinhas.';
@@ -617,5 +656,4 @@
         if (subjects.length) { showBoletim(); } else { showSetup(false); }
     </script>
 </body>
-
 </html>
