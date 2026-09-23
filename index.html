@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Boletim — EMHTI01MB</title>
+    <link rel="icon" href="https://thumbs.dreamstime.com/z/ilustra%C3%A7%C3%A3o-do-%C3%ADcone-estilo-desenho-animado-da-tabela-de-planejamento-laranja-placa-e-lista-verifica%C3%A7%C3%A3o-233826522.jpg">
+    <style>
+        :root {
+            --bg: #f6f4ef;
+            --panel: #ffffff;
+            --ink: #1f2420;
+            --muted: #6b7268;
+            --line: #e2ddd1;
+            --ok: #2f6f4f;
+            --ok-bg: #e7f1ea;
+            --bad: #a13d2c;
+            --bad-bg: #fbeae5;
+            --accent: #3d5a4c;
+            --input-bg: #fbfaf6;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #161915;
+                --panel: #1e2219;
+                --ink: #eae7de;
+                --muted: #9aa196;
+                --line: #33382e;
+                --ok: #7fcda1;
+                --ok-bg: #1d2c22;
+                --bad: #e08669;
+                --bad-bg: #2e1e19;
+                --accent: #9fc2ab;
+                --input-bg: #22271c;
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --bg: #161915;
+            --panel: #1e2219;
+            --ink: #eae7de;
+            --muted: #9aa196;
+            --line: #33382e;
+            --ok: #7fcda1;
+            --ok-bg: #1d2c22;
+            --bad: #e08669;
+            --bad-bg: #2e1e19;
+            --accent: #9fc2ab;
+            --input-bg: #22271c;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-padding-top: env(safe-area-inset-top, 0px);
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: "Iowan Old Style", "Georgia", serif;
+            min-height: 100%;
+        }
+
+        header {
+            padding: 28px 20px 18px;
+            max-width: 920px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 0 0 2px;
+            letter-spacing: .2px;
+        }
+
+        .sub {
+            color: var(--muted);
+            font-size: 14px;
+            margin: 0;
+            font-family: -apple-system, system-ui, sans-serif;
+        }
+
+        main {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+        }
+
+        .wrap {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 640px;
+        }
+
+        th,
+        td {
+            padding: 10px 12px;
+            text-align: left;
+            font-size: 14px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        th {
+            font-family: -apple-system, system-ui, sans-serif;
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--muted);
+            text-transform: none;
+            white-space: nowrap;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        td.materia {
+            font-weight: 600;
+        }
+
+        input.nota {
+            width: 56px;
+            padding: 6px 4px;
+            text-align: center;
+            font-size: 14px;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            background: var(--input-bg);
+            color: var(--ink);
+            font-family: inherit;
+        }
+
+        input.nota:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 1px;
+        }
+
+        td.soma,
+        td.media {
+            font-family: -apple-system, system-ui, sans-serif;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .tag {
+            font-family: -apple-system, system-ui, sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .tag.ok {
+            color: var(--ok);
+            background: var(--ok-bg);
+        }
+
+        .tag.bad {
+            color: var(--bad);
+            background: var(--bad-bg);
+        }
+
+        footer {
+            max-width: 920px;
+            margin: 24px auto 60px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            font-family: -apple-system, system-ui, sans-serif;
+        }
+
+        @media (max-width:480px) {
+            footer {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 14px 16px;
+        }
+
+        .stat h2 {
+            margin: 0 0 10px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--muted);
+            font-family: -apple-system, system-ui, sans-serif;
+        }
+
+        .stat ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .stat li {
+            font-size: 14px;
+            font-family: "Iowan Old Style", Georgia, serif;
+        }
+
+        .stat.empty {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .avg {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .avg b {
+            font-size: 26px;
+            font-family: "Iowan Old Style", Georgia, serif;
+        }
+
+        .avg span {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .hint {
+            color: var(--muted);
+            font-size: 12.5px;
+            margin: 14px 20px 0;
+            font-family: -apple-system, system-ui, sans-serif;
+            max-width: 880px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (max-width:480px) {
+            h1 {
+                font-size: 19px;
+            }
+
+            th,
+            td {
+                padding: 8px 8px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Boletim — 1º EM · EMHTI01MB</h1>
+        <p class="sub">Toque numa nota para editar. Soma, média e situação recalculam sozinhas.</p>
+    </header>
+    <main>
+        <div class="wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Matéria</th>
+                        <th>Bim 1</th>
+                        <th>Bim 2</th>
+                        <th>Bim 3</th>
+                        <th>Bim 4</th>
+                        <th>Soma</th>
+                        <th>÷4</th>
+                        <th>Situação</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+            </table>
+        </div>
+    </main>
+    <footer>
+        <div class="stat avg"><b id="statAvg">0,00</b><span>Média geral</span></div>
+        <div class="stat">
+            <h2>Aprovadas</h2>
+            <ul id="listOk"></ul>
+        </div>
+        <div class="stat">
+            <h2 id="labelBad">Incompletas</h2>
+            <ul id="listBad"></ul>
+        </div>
+    </footer>
+    <script>
+        const KEY = 'boletim-emhti01mb-v1';
+        const materias = [
+            ["Arte", 10.0, 10.0, 10.0, null],
+            ["ACDES", 9.5, 10.0, 9.0, null],
+            ["Biologia", 9.7, 10.0, 5.5, null],
+            ["Design e Mídia Digital", 9.3, 9.0, null, null],
+            ["Ensino Religioso", 10.0, 10.0, 8.5, null],
+            ["Física", 8.6, 8.4, 7.9, null],
+            ["Geografia", 6.3, 7.3, 7.0, null],
+            ["História", 8.1, 7.3, 7.8, null],
+            ["Instalação e Manut. Hardware", 9.5, 8.3, null, null],
+            ["Introdução a Robótica", 8.1, 9.5, 9.5, null],
+            ["Introdução ao Dev WEB", 9.9, 8.5, 9.5, null],
+            ["LEM Inglês", 9.4, 7.4, 9.5, null],
+            ["LP - Gramática", 7.6, 7.7, 7.4, null],
+            ["LP - Literatura", 8.7, 8.3, 6.6, null],
+            ["LP - Redação", 8.5, 7.7, null, null],
+            ["Lógica de Programação", 6.0, 7.3, 5.0, null],
+            ["Matemática", 8.8, 7.5, 8.0, null],
+            ["Química", 7.5, 9.9, 8.4, null],
+        ];
+
+        function loadData() {
+            try {
+                const raw = localStorage.getItem(KEY);
+                if (raw) return JSON.parse(raw);
+            } catch (e) { }
+            return materias.map(m => ({ nome: m[0], b: [m[1], m[2], m[3], m[4]] }));
+        }
+        function saveData(data) {
+            try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) { }
+        }
+        function fmt(n) { return n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+
+        let data = loadData();
+        const tbody = document.getElementById('tbody');
+
+        function render() {
+            tbody.innerHTML = '';
+            const aprovadas = [], reprovadas = [];
+            let avgSum = 0, avgCount = 0;
+            data.forEach((row, ri) => {
+                const tr = document.createElement('tr');
+                const notas = row.b.filter(v => v !== null && v !== '' && !isNaN(v)).map(Number);
+                const soma = notas.reduce((a, b) => a + b, 0);
+                const media = notas.length ? soma / 4 : 0;
+                const aprovado = media >= 6.0 && notas.length >= 3;
+                if (notas.length >= 3) { (aprovado ? aprovadas : reprovadas).push(row.nome); avgSum += media; avgCount++; }
+
+                let cells = '<td class="materia">' + row.nome + '</td>';
+                for (let c = 0; c < 4; c++) {
+                    const v = row.b[c];
+                    cells += '<td><input class="nota" inputmode="decimal" data-ri="' + ri + '" data-c="' + c + '" value="' + (v === null ? '' : fmt(v)) + '" placeholder="—"></td>';
+                }
+                cells += '<td class="soma">' + (notas.length ? fmt(soma) : '—') + '</td>';
+                cells += '<td class="media">' + (notas.length ? fmt(media) : '—') + '</td>';
+                cells += '<td>' + (notas.length >= 3 ? '<span class="tag ' + (aprovado ? 'ok' : 'bad') + '">' + (aprovado ? 'Aprovado' : 'Reprovado') + '</span>' : '<span class="tag bad">Incompleto</span>') + '</td>';
+                tr.innerHTML = cells;
+                tbody.appendChild(tr);
+            });
+            const listOk = document.getElementById('listOk');
+            const listBad = document.getElementById('listBad');
+            document.querySelector('#listOk').previousElementSibling.textContent = 'Aprovadas (' + aprovadas.length + ')';
+            document.querySelector('#listBad').previousElementSibling.textContent = 'Incompletas (' + reprovadas.length + ')';
+            listOk.innerHTML = aprovadas.length ? aprovadas.map(n => '<li>' + n + '</li>').join('') : '<li class="empty">Nenhuma ainda</li>';
+            listBad.innerHTML = reprovadas.length ? reprovadas.map(n => '<li>' + n + '</li>').join('') : '<li class="empty">Nenhuma ainda</li>';
+            document.getElementById('statAvg').textContent = avgCount ? fmt(avgSum / avgCount) : '0,00';
+
+            tbody.querySelectorAll('input.nota').forEach(inp => {
+                inp.addEventListener('change', e => {
+                    const ri = +e.target.dataset.ri, c = +e.target.dataset.c;
+                    const raw = e.target.value.replace(',', '.').trim();
+                    data[ri].b[c] = raw === '' ? null : Math.max(0, Math.min(10, parseFloat(raw)));
+                    saveData(data);
+                    render();
+                });
+            });
+        }
+        render();
+    </script>
+</body>
+
+</html>
