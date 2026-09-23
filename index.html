@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <title>Boletim altomatico</title>
+    <title>Boletim</title>
     <link rel="icon"
-        href="https://thumbs.dreamstime.com/z/ilustra%C3%A7%C3%A3o-do-%C3%ADcone-estilo-desenho-animado-da-tabela-de-planejamento-laranja-placa-e-lista-verifica%C3%A7%C3%A3o-233826522.jpg">
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📓</text></svg>">
     <style>
         :root {
             --bg: #f6f4ef;
@@ -70,6 +70,10 @@
             min-height: 100%;
         }
 
+        [hidden] {
+            display: none !important;
+        }
+
         header {
             padding: 28px 20px 18px;
             max-width: 920px;
@@ -94,6 +98,117 @@
             max-width: 920px;
             margin: 0 auto;
             padding: 0 20px 40px;
+        }
+
+        .setup-panel {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 22px;
+        }
+
+        .setup-form {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .setup-form input[type="text"] {
+            flex: 1;
+            padding: 11px 12px;
+            font-size: 15px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: var(--input-bg);
+            color: var(--ink);
+            font-family: inherit;
+        }
+
+        .setup-form input[type="text"]:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 1px;
+        }
+
+        .btn {
+            font-family: -apple-system, system-ui, sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 11px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--accent);
+            background: var(--accent);
+            color: var(--panel);
+            cursor: pointer;
+        }
+
+        .btn:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+        }
+
+        .btn.secondary {
+            background: transparent;
+            color: var(--accent);
+        }
+
+        .btn.ghost {
+            background: transparent;
+            color: var(--muted);
+            border-color: var(--line);
+            font-weight: 500;
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            min-height: 34px;
+            margin-bottom: 20px;
+        }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--input-bg);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 6px 8px 6px 14px;
+            font-size: 14px;
+            font-family: -apple-system, system-ui, sans-serif;
+        }
+
+        .chip button {
+            border: none;
+            background: none;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1;
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+        .chip button:hover {
+            color: var(--bad);
+        }
+
+        .empty-hint {
+            color: var(--muted);
+            font-size: 13.5px;
+            font-family: -apple-system, system-ui, sans-serif;
+        }
+
+        .setup-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 12px;
         }
 
         .wrap {
@@ -122,7 +237,6 @@
             font-weight: 600;
             font-size: 12px;
             color: var(--muted);
-            text-transform: none;
             white-space: nowrap;
         }
 
@@ -243,16 +357,6 @@
             color: var(--muted);
         }
 
-        .hint {
-            color: var(--muted);
-            font-size: 12.5px;
-            margin: 14px 20px 0;
-            font-family: -apple-system, system-ui, sans-serif;
-            max-width: 880px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
         @media (max-width:480px) {
             h1 {
                 font-size: 19px;
@@ -263,35 +367,60 @@
                 padding: 8px 8px;
                 font-size: 13px;
             }
+
+            .setup-form {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 
 <body>
     <header>
-        <h1>Boletim altomatico</h1>
-        <p class="sub">Toque numa nota para editar. Soma, média e situação recalculam sozinhas.</p>
+        <h1 id="pageTitle">Boletim</h1>
+        <p class="sub" id="pageSub">Cadastre as matérias para montar seu boletim.</p>
     </header>
+
     <main>
-        <div class="wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Matéria</th>
-                        <th>Bim 1</th>
-                        <th>Bim 2</th>
-                        <th>Bim 3</th>
-                        <th>Bim 4</th>
-                        <th>Soma</th>
-                        <th>÷4</th>
-                        <th>Situação</th>
-                    </tr>
-                </thead>
-                <tbody id="tbody"></tbody>
-            </table>
-        </div>
+        <section id="setupScreen" class="setup-panel">
+            <form class="setup-form" id="subjectForm">
+                <input type="text" id="subjectInput" placeholder="Nome da matéria (ex: Biologia)" autocomplete="off">
+                <button type="submit" class="btn">Adicionar</button>
+            </form>
+            <div class="chips" id="chipsList">
+                <span class="empty-hint">Nenhuma matéria adicionada ainda.</span>
+            </div>
+            <div class="setup-actions">
+                <button type="button" class="btn ghost" id="cancelEditBtn" hidden>Cancelar</button>
+                <button type="button" class="btn" id="startBtn" disabled>Montar boletim</button>
+            </div>
+        </section>
+
+        <section id="boletimScreen" hidden>
+            <div class="toolbar">
+                <button type="button" class="btn secondary" id="editSubjectsBtn">Editar matérias</button>
+            </div>
+            <div class="wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Matéria</th>
+                            <th>Bim 1</th>
+                            <th>Bim 2</th>
+                            <th>Bim 3</th>
+                            <th>Bim 4</th>
+                            <th>Soma</th>
+                            <th>÷4</th>
+                            <th>Situação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody"></tbody>
+                </table>
+            </div>
+        </section>
     </main>
-    <footer>
+
+    <footer id="statsFooter" hidden>
         <div class="stat avg"><b id="statAvg">0,00</b><span>Média geral</span></div>
         <div class="stat">
             <h2>Aprovadas</h2>
@@ -302,86 +431,164 @@
             <ul id="listBad"></ul>
         </div>
     </footer>
-    <script>
-        const KEY = 'boletim-emhti01mb-v2-zerado';
-        const materias = [
-            ["Arte", null, null, null, null],
-            ["ACDES", null, null, null, null],
-            ["Biologia", null, null, null, null],
-            ["Design e Mídia Digital", null, null, null, null],
-            ["Ensino Religioso", null, null, null, null],
-            ["Física", null, null, null, null],
-            ["Geografia", null, null, null, null],
-            ["História", null, null, null, null],
-            ["Instalação e Manut. Hardware", null, null, null, null],
-            ["Introdução a Robótica", null, null, null, null],
-            ["Introdução ao Dev WEB", null, null, null, null],
-            ["LEM Inglês", null, null, null, null],
-            ["LP - Gramática", null, null, null, null],
-            ["LP - Literatura", null, null, null, null],
-            ["LP - Redação", null, null, null, null],
-            ["Lógica de Programação", null, null, null, null],
-            ["Matemática", null, null, null, null],
-            ["Química", null, null, null, null],
-        ];
 
-        function loadData() {
+    <script>
+        const SUBJECTS_KEY = 'boletim-subjects-v1';
+        const GRADES_KEY = 'boletim-grades-v1';
+
+        function loadSubjects() {
             try {
-                const raw = localStorage.getItem(KEY);
+                const raw = localStorage.getItem(SUBJECTS_KEY);
                 if (raw) return JSON.parse(raw);
             } catch (e) { }
-            return materias.map(m => ({ nome: m[0], b: [m[1], m[2], m[3], m[4]] }));
+            return [];
         }
-        function saveData(data) {
-            try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) { }
+        function saveSubjects(list) {
+            try { localStorage.setItem(SUBJECTS_KEY, JSON.stringify(list)); } catch (e) { }
+        }
+        function loadGrades() {
+            try {
+                const raw = localStorage.getItem(GRADES_KEY);
+                if (raw) return JSON.parse(raw);
+            } catch (e) { }
+            return {};
+        }
+        function saveGrades(obj) {
+            try { localStorage.setItem(GRADES_KEY, JSON.stringify(obj)); } catch (e) { }
         }
         function fmt(n) { return n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
 
-        let data = loadData();
-        const tbody = document.getElementById('tbody');
+        let subjects = loadSubjects();
+        let grades = loadGrades();
 
-        function render() {
+        const setupScreen = document.getElementById('setupScreen');
+        const boletimScreen = document.getElementById('boletimScreen');
+        const statsFooter = document.getElementById('statsFooter');
+        const pageTitle = document.getElementById('pageTitle');
+        const pageSub = document.getElementById('pageSub');
+        const chipsList = document.getElementById('chipsList');
+        const startBtn = document.getElementById('startBtn');
+        const cancelEditBtn = document.getElementById('cancelEditBtn');
+        const subjectForm = document.getElementById('subjectForm');
+        const subjectInput = document.getElementById('subjectInput');
+
+        let editingDraft = [];
+        let isEditingExisting = false;
+
+        function renderChips() {
+            if (!editingDraft.length) {
+                chipsList.innerHTML = '<span class="empty-hint">Nenhuma matéria adicionada ainda.</span>';
+            } else {
+                chipsList.innerHTML = editingDraft.map((name, i) =>
+                    '<span class="chip">' + name + '<button type="button" data-i="' + i + '" aria-label="Remover">×</button></span>'
+                ).join('');
+                chipsList.querySelectorAll('button').forEach(b => {
+                    b.addEventListener('click', () => {
+                        editingDraft.splice(+b.dataset.i, 1);
+                        renderChips();
+                    });
+                });
+            }
+            startBtn.disabled = editingDraft.length === 0;
+        }
+
+        subjectForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const name = subjectInput.value.trim();
+            if (!name) return;
+            if (editingDraft.some(s => s.toLowerCase() === name.toLowerCase())) {
+                subjectInput.value = '';
+                return;
+            }
+            editingDraft.push(name);
+            subjectInput.value = '';
+            subjectInput.focus();
+            renderChips();
+        });
+
+        function showSetup(editing) {
+            isEditingExisting = editing;
+            editingDraft = editing ? [...subjects] : [];
+            pageTitle.textContent = editing ? 'Editar matérias' : 'Boletim';
+            pageSub.textContent = editing
+                ? 'Adicione ou remova matérias. As notas já lançadas são mantidas.'
+                : 'Cadastre as matérias para montar seu boletim.';
+            cancelEditBtn.hidden = !editing;
+            renderChips();
+            setupScreen.hidden = false;
+            boletimScreen.hidden = true;
+            statsFooter.hidden = true;
+            subjectInput.focus();
+        }
+
+        cancelEditBtn.addEventListener('click', () => showBoletim());
+
+        startBtn.addEventListener('click', () => {
+            subjects = [...editingDraft];
+            saveSubjects(subjects);
+            Object.keys(grades).forEach(k => { if (!subjects.includes(k)) delete grades[k]; });
+            saveGrades(grades);
+            showBoletim();
+        });
+
+        document.getElementById('editSubjectsBtn').addEventListener('click', () => showSetup(true));
+
+        function showBoletim() {
+            pageTitle.textContent = 'Boletim';
+            pageSub.textContent = 'Toque numa nota para editar. Soma, média e situação recalculam sozinhas.';
+            setupScreen.hidden = true;
+            boletimScreen.hidden = false;
+            statsFooter.hidden = false;
+            renderTable();
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('tbody');
             tbody.innerHTML = '';
             const aprovadas = [], reprovadas = [];
             let avgSum = 0, avgCount = 0;
-            data.forEach((row, ri) => {
-                const tr = document.createElement('tr');
-                const notas = row.b.filter(v => v !== null && v !== '' && !isNaN(v)).map(Number);
-                const soma = notas.reduce((a, b) => a + b, 0);
+
+            subjects.forEach(nome => {
+                if (!grades[nome]) grades[nome] = [null, null, null, null];
+                const b = grades[nome];
+                const notas = b.filter(v => v !== null && v !== '' && !isNaN(v)).map(Number);
+                const soma = notas.reduce((a, x) => a + x, 0);
                 const media = notas.length ? soma / 4 : 0;
                 const aprovado = media >= 6.0 && notas.length >= 3;
-                if (notas.length >= 3) { (aprovado ? aprovadas : reprovadas).push(row.nome); avgSum += media; avgCount++; }
+                if (notas.length >= 3) { (aprovado ? aprovadas : reprovadas).push(nome); avgSum += media; avgCount++; }
 
-                let cells = '<td class="materia">' + row.nome + '</td>';
+                let cells = '<td class="materia">' + nome + '</td>';
                 for (let c = 0; c < 4; c++) {
-                    const v = row.b[c];
-                    cells += '<td><input class="nota" inputmode="decimal" data-ri="' + ri + '" data-c="' + c + '" value="' + (v === null ? '' : fmt(v)) + '" placeholder="—"></td>';
+                    const v = b[c];
+                    cells += '<td><input class="nota" inputmode="decimal" data-nome="' + nome + '" data-c="' + c + '" value="' + (v === null ? '' : fmt(v)) + '" placeholder="—"></td>';
                 }
                 cells += '<td class="soma">' + (notas.length ? fmt(soma) : '—') + '</td>';
                 cells += '<td class="media">' + (notas.length ? fmt(media) : '—') + '</td>';
                 cells += '<td>' + (notas.length >= 3 ? '<span class="tag ' + (aprovado ? 'ok' : 'bad') + '">' + (aprovado ? 'Aprovado' : 'Reprovado') + '</span>' : '<span class="tag bad">Incompleto</span>') + '</td>';
+
+                const tr = document.createElement('tr');
                 tr.innerHTML = cells;
                 tbody.appendChild(tr);
             });
-            const listOk = document.getElementById('listOk');
-            const listBad = document.getElementById('listBad');
+
             document.querySelector('#listOk').previousElementSibling.textContent = 'Aprovadas (' + aprovadas.length + ')';
             document.querySelector('#listBad').previousElementSibling.textContent = 'Incompletas (' + reprovadas.length + ')';
-            listOk.innerHTML = aprovadas.length ? aprovadas.map(n => '<li>' + n + '</li>').join('') : '<li class="empty">Nenhuma ainda</li>';
-            listBad.innerHTML = reprovadas.length ? reprovadas.map(n => '<li>' + n + '</li>').join('') : '<li class="empty">Nenhuma ainda</li>';
+            document.getElementById('listOk').innerHTML = aprovadas.length ? aprovadas.map(n => '<li>' + n + '</li>').join('') : '<li class="empty">Nenhuma ainda</li>';
+            document.getElementById('listBad').innerHTML = reprovadas.length ? reprovadas.map(n => '<li>' + n + '</li>').join('') : '<li class="empty">Nenhuma ainda</li>';
             document.getElementById('statAvg').textContent = avgCount ? fmt(avgSum / avgCount) : '0,00';
 
             tbody.querySelectorAll('input.nota').forEach(inp => {
                 inp.addEventListener('change', e => {
-                    const ri = +e.target.dataset.ri, c = +e.target.dataset.c;
+                    const nome = e.target.dataset.nome, c = +e.target.dataset.c;
                     const raw = e.target.value.replace(',', '.').trim();
-                    data[ri].b[c] = raw === '' ? null : Math.max(0, Math.min(10, parseFloat(raw)));
-                    saveData(data);
-                    render();
+                    grades[nome][c] = raw === '' ? null : Math.max(0, Math.min(10, parseFloat(raw)));
+                    saveGrades(grades);
+                    renderTable();
                 });
             });
         }
-        render();
+
+        if (subjects.length) { showBoletim(); } else { showSetup(false); }
     </script>
 </body>
 
